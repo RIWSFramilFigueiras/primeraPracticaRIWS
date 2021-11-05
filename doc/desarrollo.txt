@@ -29,12 +29,12 @@ al colocar la semilla en esta página se encuentren los enlaces a todas las dem�
 
 Esta expresion regular permite que las URL que concuerden con una temporada determinada
 sean aceptadas por el sistema
-+^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2]0)
++^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2][0-9])
 
 # Temporadas + gran premio
 Esta expresion regular permite que las URL que concuerden con una temporada determinada
 y un gran premio sean aceptadas por el sistema
-+^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2]0)/[a-zA-Z] 
++^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2][0-9])/[a-zA-Z] 
 
 Por lo tanto y como consecuencia de que el punto de partida del crawling sean todas las temporadas,
 la semilla se sitúa en la página http://www.4mula1stats.com/seasons
