@@ -13,11 +13,11 @@ expresiones:
 Todas estas páginas sirven contenido de estadísticas y resultados
 que no nos interesan para nuestro proceso de crawling.
 
--^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2]0)/statistics
--^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2]0)/standings.html
--^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2]0)/statistics.html
--^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2]0)/drivers.html
--^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2]0)/driver-results.html
+-^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2][0-9])/statistics
+-^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2][0-9])/standings.html
+-^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2][0-9])/statistics.html
+-^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2][0-9])/drivers.html
+-^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2][0-9])/driver-results.html
 
 #Para que recoja las urls de las Temporadas
 
