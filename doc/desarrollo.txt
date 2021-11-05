@@ -1,0 +1,41 @@
+Parte de Crawling web
+
+Para esta parte era necesario crawlear todas las carreras de las temporadas de Formula 1 incluidas en el intervalo cerrado [1950-2020].
+Para ello se configura nutch con las siguientes regles de URL:
+
+Expresiones regulares para las páginas:
+
+Solo se quiere extraer los resultados que aparecen en la tabla de resultados. Es por ello que se introducen las siguientes
+expresiones:
+
+# Exluir páginas que no sean de grandes premios
+
+Todas estas páginas sirven contenido de estadísticas y resultados
+que no nos interesan para nuestro proceso de crawling.
+
+-^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2]0)/statistics
+-^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2]0)/standings.html
+-^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2]0)/statistics.html
+-^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2]0)/drivers.html
+-^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2]0)/driver-results.html
+
+#Para que recoja las urls de las Temporadas
+
+Esta págna es crucial, pues es el índice de todas las temporadas que existen y sirve para que
+al colocar la semilla en esta página se encuentren los enlaces a todas las demás temporadas.
++^http://www.4mula1stats.com/seasons
+
+# Temporadas
+
+Esta expresion regular permite que las URL que concuerden con una temporada determinada
+sean aceptadas por el sistema
++^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2]0)
+
+# Temporadas + gran premio
+Esta expresion regular permite que las URL que concuerden con una temporada determinada
+y un gran premio sean aceptadas por el sistema
++^http://www.4mula1stats.com/(19[5-9][0-9]|20[0-2]0)/[a-zA-Z] 
+
+Por lo tanto y como consecuencia de que el punto de partida del crawling sean todas las temporadas,
+la semilla se sitúa en la página http://www.4mula1stats.com/seasons
+
