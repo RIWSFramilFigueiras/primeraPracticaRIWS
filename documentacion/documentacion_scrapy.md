@@ -318,4 +318,24 @@ A continuación, se debe de modificar el esquema de Solr para que pueda trabajar
 
 Para ello se insertan los siguientes valores en el esquema:
 
+```xml
+<!--  Tipos de datos para tabla de resultados de Grandes Premios de Fórmula 1 1950-2021 Formula1.com -->
+<field name="granPremio" type="text_general" indexed="true" stored="true" multiValued="false"/>
+<field name="dia" type="pint" indexed="true" stored="true" multiValued="false"/>
+<field name="mes" type="text_general" indexed="true" stored="true" multiValued="false"/>
+<field name="ano" type="pint" indexed="true" stored="true" multiValued="false"/>
+<field name="nombre" type="text_general" indexed="true" stored="true" multiValued="false"/>
+<field name="apellido" type="text_general" indexed="true" stored="true" multiValued="false"/>
+<field name="iniciales" type="text_general" indexed="true" stored="true" multiValued="false"/>
+<field name="equipo" type="text_general" indexed="true" stored="true" multiValued="false"/>
+<!--  Tipos de datos para tabla de resultados de Grandes Premios de Fórmula 1 1950-2021 Formula1.com -->
+```
 
+Todos los tipos de datos se definen de tipo text_general a excepción del día y el año en el que se produce la victoria del Gran Premio, los cuales son de tipo numérico y se configuran con el tipo de dato pint.
+
+Todos los tipos serán marcados con indexed y stored a true.
+
+* Name: todos los tipos tienen el mismo parámetro name que nombre tienen en BBDD y, transitivamente, en el index que se configura de scrapy.
+* Indexed: parámetro que hace que el tipo de dato sea indexado y que, por tanto, se pueda buscar por el en una query. Es esencial que, por tanto, todos los tipos de datos declarados lo sean.
+* Stored: parámetro que configura si el tipo de dato puede o no ser recuperado. En este caso también nos interesa que siempre se recupere.
+* Multivalued: En este caso, ningún tipo de dato será multivaluado.
