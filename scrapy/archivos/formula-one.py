@@ -1,5 +1,8 @@
 import scrapy
 
+# Se importan los items definidos
+from formula1.items import Formula1Item
+
 class FormulaOneSpider(scrapy.Spider):
     # Nombre del spider
     name = 'formula-one'
@@ -17,12 +20,16 @@ class FormulaOneSpider(scrapy.Spider):
 
     # Se recogen los datos que nos interesan para la práctica
     def parse(self, response):
+        
+        formulaItem = Formula1Item()
+
         for row in response.xpath('//*[@class="resultsarchive-table"]//tbody//tr'):
-            yield {
-                'Gran premio' : row.xpath('td//text()')[1].extract().strip(),
-                'Fecha': row.xpath('td//text()')[3].extract().strip(),
-                'Nombre' : row.xpath('td//text()')[5].extract().strip(),
-                'Apellido' : row.xpath('td//text()')[7].extract().strip(),
-                'Iniciales' : row.xpath('td//text()')[9].extract().strip(),
-                'Equipo' : row.xpath('td//text()')[11].extract().strip(),
-            }
+
+            formulaItem['granPremio'] = row.xpath('td//text()')[1].extract().strip()
+            formulaItem['fecha'] = row.xpath('td//text()')[3].extract().strip()
+            formulaItem['nombre'] = row.xpath('td//text()')[5].extract().strip()
+            formulaItem['apellido'] = row.xpath('td//text()')[7].extract().strip()
+            formulaItem['iniciales'] = row.xpath('td//text()')[9].extract().strip()
+            formulaItem['equipo'] = row.xpath('td//text()')[11].extract().strip()
+            
+            yield formulaItem

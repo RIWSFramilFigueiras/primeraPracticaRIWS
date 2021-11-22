@@ -1,74 +1,105 @@
-# Comandos necesarios para extraer info. de la tabla
+# Documentación práctica RIWS - MUEI
 
-## Activar el python environment
+## Scrapy
 
-source 
+### Activar el python environment
 
-## Abrir la consola de scrapy
+Se activa el entorno python en donde están las dependencias necesarias para Scrapy.
 
+```bash
+source scrapy-env/bin/activate
+```
+
+
+### Descubrir los datos necesarios mediante Scrapy shell
+
+Se abre la shell de Scrapy, la cual se utilizará para, antes de desarrollar cualquier código, saber con precisión que partes de la página se necesitan de cara a obtener los datos necesarios.
+
+Se ejecuta el siguiente comando:
+
+```bash
 scrapy shell
+```
 
-## Hacer un fetch de la página inicial
 
+### Hacer un fetch de la página inicial
+
+Posteriormente se ordena a la terminar realizar un crawleado de la página. El comando necesario es el siguiente:
+
+```py
 fetch('https://www.formula1.com/en/results.html')
+```
 
-## Conseguir acceso a la tabla y, concretamente, al body de la misma, mediante el uso de xpath
+### Conseguir acceso a la tabla y, concretamente, al body de la misma, mediante el uso de xpath
 
+Una vez se ha crawleado la página, gracias a la herramiente inspeccionar elemento se investiga cómo cojer la tabla de resultados de los Grandes Premios de Fórmula 1. Al final, se descubre que dicha tabla tiene un estilo CSS resultsarchive-table, por lo que, usando el lenguaje de programación xpath, se guarda dicha tabla en una variable.
+
+```python
 table = response.xpath('//*[@class="resultsarchive-table"]//tbody')
+```
 
-## Conseguir acceso a las filas de la tabla (los resultados de las carreras), buscando por el elemento tr mediante xpath
+## Conseguir acceso a las filas de la tabla
 
+Una vez se tiene la tabla, lo interesante es conseguir las filas. Para ello, se buscan los elementos tr de la misma.
+
+```py
 rows = table.xpath('//tr')
+```
+
 
 ## Conseguir acceso a la primera fila de la tabla útil (que sea un gran premio y no el nombre de la columna)
 
-row = rows[1]
-
-## Extraer el primero de los campos/columnas mediante el selector td de xpath
-
-row.xpath('td//text()')[0].extract()
-
-salida:
+Ahora, para descubrir donde están los datos interesantes, se coje la primera de las filas que contienen datos:
 
 ```
---> Columna 0 no tiene información relevante
+row = rows[1]
+```
+
+## Extraer los campos para ver dónde se sitúan los datos importantes
+
+Ahora se realizan búsquedas en los diferentes elementos td. Se obtiene lo siguiente:
+
+```py
+## Columna 0 no tiene información relevante
 >>> row.xpath('td//text()')[0].extract()
 '\n                    '
---> Columna 1 contiene el Gran Premio
+## Columna 1 contiene el Gran Premio
 >>> row.xpath('td//text()')[1].extract()
 '\n                        Bahrain\n                    '
 >>> row.xpath('td//text()')[2].extract()
 '\n                '
---> Columna 3 contiene la fecha
+## Columna 3 contiene la fecha
 >>> row.xpath('td//text()')[3].extract()
 '28 Mar 2021'
 >>> row.xpath('td//text()')[4].extract()
 '\n                    '
---> Columna 5 contiene el nombre del piloto
+## Columna 5 contiene el nombre del piloto
 >>> row.xpath('td//text()')[5].extract()
 'Lewis'
 >>> row.xpath('td//text()')[6].extract()
 '\n                    '
---> Columna 7 contiene el apellido del piloto
+## Columna 7 contiene el apellido del piloto
 >>> row.xpath('td//text()')[7].extract()
 'Hamilton'
 >>> row.xpath('td//text()')[8].extract()
 '\n                    '
---> Columna 9 contiene las iniciales del piloto
+## Columna 9 contiene las iniciales del piloto
 >>> row.xpath('td//text()')[9].extract()
 'HAM'
 >>> row.xpath('td//text()')[10].extract()
 '\n                '
---> Columna 11 contiene la escudería
+## Columna 11 contiene la escudería
 >>> row.xpath('td//text()')[11].extract()
 'Mercedes'
---> Columna 12 contiene las vueltas del gran premio
+## Columna 12 contiene las vueltas del gran premio
 >>> row.xpath('td//text()')[12].extract()
 '56'
 
 ```
 
 ## Hacer un bucle que imprima unos cuantos resultados (nótese que se añade strip para quitar espacios precedentes y posteriores)
+
+Como paso previo a la programación del spider, se desarrolla un bucle en python que hace lo propio pero con todas las filas de la tabla, además se añade la función strip para eliminar espacios antes y después:
 
 ``` python
 for row in response.xpath('//*[@class="resultsarchive-table"]//tbody//tr'):
@@ -143,10 +174,125 @@ class FormulaOneSpider(scrapy.Spider):
             }
 ```
 
-Lanzar el siguiente comando:
+Al lanzar el siguiente comando se obtienen satisfactoriamente los datos buscados, todos los grandes premios desde 1950 hasta 2021 y los datos de los pilotos y escuderias ganadoras.
+
 ```bash
 scrapy crawl --output -:json formula-one
 ```
 
-Resultado:
+## Conexión con la base de datos MongoDB
 
+Para conseguir conectar Scrapy con mongoDb, se siguen los siguientes pasos:
+
+## Añadir la cadena de conexión a la configuración del spider
+
+En el archivo de configuración en donde se sitúa el spider de Scrapy, se define la cadena de conexión y el nombre que tendrá la base de datos en donde irán los datos crawleados. Las lineas son las siguientes:
+
+```conf
+MONGO_URI = 'mongodb://localhost:27017'
+MONGO_DATABASE = 'formulaData'
+```
+
+### Creación de un item
+
+Un item es un objeto de Python al estilo clave valor. Se utiliza para convertir los datos desestructurados de la página web a datos estructurado gracias a este tipo de dato. El Spider configurado anteriormente pasará a devolver ahora un item. En este caso, el item necesario para los datos de los Grandes Premios de Fórmula 1 es el siguiente:
+
+```python
+import scrapy
+
+class Formula1Item(scrapy.Item):
+
+    granPremio = scrapy.Field()
+    fecha = scrapy.Field()
+    nombre = scrapy.Field()
+    apellido = scrapy.Field()
+    iniciales = scrapy.Field()
+    equipo = scrapy.Field()
+```
+
+### Creación del item pipeline
+
+El item pipeline sirve para procesar el item que sale del spider gracias a una serie de componentes que se ejecutan de manera secuencial.
+
+En este caso, el pipeline recoje del archivo de configuración la cadena de conexión de la base de datos y, posteriormente, se conecta a la base de datos, crea el conjunto de items en ella y los inserta uno a uno.
+
+El pipeline es el siguiente:
+
+```python
+import pymongo
+from itemadapter import ItemAdapter
+
+
+class Formula1Pipeline:
+    collection_name = 'formulaData-items'
+
+    def __init__(self, mongo_uri, mongo_db):
+        self.mongo_uri = mongo_uri
+        self.mongo_db = mongo_db
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(
+            mongo_uri=crawler.settings.get('MONGO_URI'),
+            mongo_db=crawler.settings.get('MONGO_DATABASE', 'items')
+        )
+
+    def open_spider(self, spider):
+        self.client = pymongo.MongoClient(self.mongo_uri)
+        self.db = self.client[self.mongo_db]
+
+    def close_spider(self, spider):
+        self.client.close()
+
+    def process_item(self, item, spider):
+        self.db[self.collection_name].insert_one(ItemAdapter(item).asdict())
+        return item
+```
+
+Con estos cambios, el spider queda ahora tal que así:
+
+```py
+import scrapy
+
+# Se importan los items definidos
+from formula1.items import Formula1Item
+
+class FormulaOneSpider(scrapy.Spider):
+    # Nombre del spider
+    name = 'formula-one'
+    # Dominios permitidos
+    allowed_domains = ['https://www.formula1.com/en/results.html']
+    # URL por la que empieza a scrapear
+    start_urls = ['https://www.formula1.com/en/results.html']
+
+    # Función que se encarga de generar las peticiones
+    def start_requests(self):
+        # La url estará parametrizada por año, para así conseguir los resultados desde 1950 hasta 2021
+        url = 'https://www.formula1.com/en/results.html/%d/races.html'
+        for year in range(1950,2021):
+            yield scrapy.Request(url=url % year , callback=self.parse)
+
+    # Se recogen los datos que nos interesan para la práctica
+    def parse(self, response):
+        
+        formulaItem = Formula1Item()
+
+        for row in response.xpath('//*[@class="resultsarchive-table"]//tbody//tr'):
+
+            formulaItem['granPremio'] = row.xpath('td//text()')[1].extract().strip()
+            formulaItem['fecha'] = row.xpath('td//text()')[3].extract().strip()
+            formulaItem['nombre'] = row.xpath('td//text()')[5].extract().strip()
+            formulaItem['apellido'] = row.xpath('td//text()')[7].extract().strip()
+            formulaItem['iniciales'] = row.xpath('td//text()')[9].extract().strip()
+            formulaItem['equipo'] = row.xpath('td//text()')[11].extract().strip()
+            
+            yield formulaItem
+```
+
+## Comprobación
+
+Finalmente, gracias a la utilidad MongoCompass, se comprueba que luego de la ejecución del Spider, los datos se guardan satisfactoriamente en la base de datos.
+
+# Solr
+
+A continuación, se debe de modificar el esquema de Solr para que pueda trabajar con los datos que le van a llegar desde MongoDB.
