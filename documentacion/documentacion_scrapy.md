@@ -203,12 +203,15 @@ import scrapy
 class Formula1Item(scrapy.Item):
 
     granPremio = scrapy.Field()
-    fecha = scrapy.Field()
+    dia = scrapy.Field()
+    mes = scrapy.Field()
+    ano = scrapy.Field()	
     nombre = scrapy.Field()
     apellido = scrapy.Field()
     iniciales = scrapy.Field()
     equipo = scrapy.Field()
 ```
+Nótese que, ahora, se separa el día, mes y el año. Esto tendrá su impacto en el spider final.
 
 ### Creación del item pipeline
 
@@ -249,7 +252,7 @@ class Formula1Pipeline:
         return item
 ```
 
-Con estos cambios, el spider queda ahora tal que así:
+Con todos estos cambios, el spider queda ahora tal que así:
 
 ```py
 import scrapy
@@ -280,7 +283,17 @@ class FormulaOneSpider(scrapy.Spider):
         for row in response.xpath('//*[@class="resultsarchive-table"]//tbody//tr'):
 
             formulaItem['granPremio'] = row.xpath('td//text()')[1].extract().strip()
-            formulaItem['fecha'] = row.xpath('td//text()')[3].extract().strip()
+            
+			# Procesamiento de la fecha
+            fechaStr = row.xpath('td//text()')[3].extract().strip()
+            fechaList = fechaStr.split()
+            dia = fechaList[0]
+            mes = fechaList[1]
+            ano = fechaList[2]
+            formulaItem['dia'] = dia
+            formulaItem['mes'] = mes
+            formulaItem['ano'] = ano
+                                    
             formulaItem['nombre'] = row.xpath('td//text()')[5].extract().strip()
             formulaItem['apellido'] = row.xpath('td//text()')[7].extract().strip()
             formulaItem['iniciales'] = row.xpath('td//text()')[9].extract().strip()
@@ -293,6 +306,16 @@ class FormulaOneSpider(scrapy.Spider):
 
 Finalmente, gracias a la utilidad MongoCompass, se comprueba que luego de la ejecución del Spider, los datos se guardan satisfactoriamente en la base de datos.
 
+Por ejemplo, se presenta uno de los elementos, correspondiente al primer Gran Premio de Fórmula 1 de la historia, tal y como se almacena en BBDD:
+
+```json
+{"_id":{"$oid":"619bd576b72c90d3b0b5755d"},"granPremio":"Great Britain","dia":"13","mes":"May","ano":"1950","nombre":"Nino","apellido":"Farina","iniciales":"FAR","equipo":"Alfa Romeo"}
+```
+
 # Solr
 
 A continuación, se debe de modificar el esquema de Solr para que pueda trabajar con los datos que le van a llegar desde MongoDB.
+
+Para ello se insertan los siguientes valores en el esquema:
+
+

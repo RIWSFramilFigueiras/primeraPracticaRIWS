@@ -26,7 +26,17 @@ class FormulaOneSpider(scrapy.Spider):
         for row in response.xpath('//*[@class="resultsarchive-table"]//tbody//tr'):
 
             formulaItem['granPremio'] = row.xpath('td//text()')[1].extract().strip()
-            formulaItem['fecha'] = row.xpath('td//text()')[3].extract().strip()
+            
+			# Procesamiento de la fecha
+            fechaStr = row.xpath('td//text()')[3].extract().strip()
+            fechaList = fechaStr.split()
+            dia = fechaList[0]
+            mes = fechaList[1]
+            ano = fechaList[2]
+            formulaItem['dia'] = dia
+            formulaItem['mes'] = mes
+            formulaItem['ano'] = ano
+                                    
             formulaItem['nombre'] = row.xpath('td//text()')[5].extract().strip()
             formulaItem['apellido'] = row.xpath('td//text()')[7].extract().strip()
             formulaItem['iniciales'] = row.xpath('td//text()')[9].extract().strip()
