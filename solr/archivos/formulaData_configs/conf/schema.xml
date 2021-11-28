@@ -124,9 +124,7 @@
 
     <!-- Tipos de datos para tabla de resultados de Grandes Premios de Fórmula 1 1950-2021 Formula1.com-->
     <field name="granPremio" type="text_general" indexed="true" stored="true" multiValued="false"/>
-    <field name="dia" type="pint" indexed="true" stored="true" multiValued="false"/>
-    <field name="mes" type="text_general" indexed="true" stored="true" multiValued="false"/>
-    <field name="ano" type="pint" indexed="true" stored="true" multiValued="false"/>
+    <field name="fecha" type="pdate" indexed="true" stored="true" multiValued="false"/>
     <field name="nombre" type="text_general" indexed="true" stored="true" multiValued="false"/>
     <field name="apellido" type="text_general" indexed="true" stored="true" multiValued="false"/>
     <field name="iniciales" type="text_general" indexed="true" stored="true" multiValued="false"/>

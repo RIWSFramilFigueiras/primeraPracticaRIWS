@@ -203,15 +203,13 @@ import scrapy
 class Formula1Item(scrapy.Item):
 
     granPremio = scrapy.Field()
-    dia = scrapy.Field()
-    mes = scrapy.Field()
-    ano = scrapy.Field()	
+    fecha = scrapy.Field()
     nombre = scrapy.Field()
     apellido = scrapy.Field()
     iniciales = scrapy.Field()
     equipo = scrapy.Field()
 ```
-Nótese que, ahora, se separa el día, mes y el año. Esto tendrá su impacto en el spider final.
+Se separa el día, mes y el año recuperados de www.formula1.com para su posteríor formateado al formato pdate de Solr. Esto tendrá su impacto en el spider final.
 
 ### Creación del item pipeline
 
@@ -224,6 +222,7 @@ El pipeline es el siguiente:
 ```python
 import pymongo
 from itemadapter import ItemAdapter
+
 
 
 class Formula1Pipeline:
@@ -260,6 +259,34 @@ import scrapy
 # Se importan los items definidos
 from formula1.items import Formula1Item
 
+def transforMonth(monthStr):
+    if monthStr == 'Jan':
+        return "01"
+    elif monthStr == 'Feb':
+        return "02"
+    elif monthStr == 'Mar':
+        return "03"
+    elif monthStr == 'Apr':
+        return "04"
+    elif monthStr == 'May':
+        return "05"
+    elif monthStr == 'Jun':
+        return "06"
+    elif monthStr == 'Jul':
+        return "07"
+    elif monthStr == 'Aug':
+        return "08"
+    elif monthStr == 'Sep':
+        return "09"
+    elif monthStr == 'Oct':
+        return "10"
+    elif monthStr == 'Nov':
+        return "11"
+    elif monthStr == 'Dec':
+        return "12"
+    else:
+        return "01"
+
 class FormulaOneSpider(scrapy.Spider):
     # Nombre del spider
     name = 'formula-one'
@@ -267,6 +294,8 @@ class FormulaOneSpider(scrapy.Spider):
     allowed_domains = ['https://www.formula1.com/en/results.html']
     # URL por la que empieza a scrapear
     start_urls = ['https://www.formula1.com/en/results.html']
+
+
 
     # Función que se encarga de generar las peticiones
     def start_requests(self):
@@ -290,10 +319,12 @@ class FormulaOneSpider(scrapy.Spider):
             dia = fechaList[0]
             mes = fechaList[1]
             ano = fechaList[2]
-            formulaItem['dia'] = dia
-            formulaItem['mes'] = mes
-            formulaItem['ano'] = ano
-                                    
+            mesNumero = transforMonth(mes)
+
+            # Transormar fecha a formato YYYY-MM-DDThh:mm:ssZ
+            formattedDate = ano+"-"+mesNumero+"-"+dia+"T"+"00:00:00Z"
+
+            formulaItem['fecha'] = formattedDate  
             formulaItem['nombre'] = row.xpath('td//text()')[5].extract().strip()
             formulaItem['apellido'] = row.xpath('td//text()')[7].extract().strip()
             formulaItem['iniciales'] = row.xpath('td//text()')[9].extract().strip()
@@ -321,9 +352,7 @@ Para ello se insertan los siguientes valores en el esquema:
 ```xml
 <!--  Tipos de datos para tabla de resultados de Grandes Premios de Fórmula 1 1950-2021 Formula1.com -->
 <field name="granPremio" type="text_general" indexed="true" stored="true" multiValued="false"/>
-<field name="dia" type="pint" indexed="true" stored="true" multiValued="false"/>
-<field name="mes" type="text_general" indexed="true" stored="true" multiValued="false"/>
-<field name="ano" type="pint" indexed="true" stored="true" multiValued="false"/>
+<field name="fecha" type="pdate" indexed="true" stored="true" multiValued="false"/>
 <field name="nombre" type="text_general" indexed="true" stored="true" multiValued="false"/>
 <field name="apellido" type="text_general" indexed="true" stored="true" multiValued="false"/>
 <field name="iniciales" type="text_general" indexed="true" stored="true" multiValued="false"/>
