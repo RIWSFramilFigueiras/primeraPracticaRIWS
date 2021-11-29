@@ -10,6 +10,7 @@ import ChanguePassword from '../../user/components/ChanguePassword';
 import ChangueProfileData from '../../user/components/ChangueProfileData';
 import RecoverUser from '../../user/components/RecoverUser';
 import ResetPassword from '../../user/components/ResetPassword';
+import FormulaDataFilter from "./FormulaDataFilter";
 
 const Body = () => {
 
@@ -19,14 +20,15 @@ const Body = () => {
             <br />
             <Switch>
                 <Route exact path="/"><Home /></Route>
-                <Route exact path="/users/find-users"><FindUsers /></Route>
-                <Route exact path="/users/signUp"><SignUp /></Route>
-                <Route exact path="/users/login"><LogIn /></Route>
-                <Route exact path="/users/recover"><RecoverUser /></Route>
-                <Route exact path="/users/:userName"><User /></Route>
-                <Route exact path="/users/:userName/changue-password"><ChanguePassword /></Route>
-                <Route exact path="/users/:userName/reset-password/:token"><ResetPassword /></Route>
-                <Route exact path="/users/:userName/changue-data"><ChangueProfileData /></Route>
+                <Route exact path="/grandes-premios"><FormulaDataFilter/></Route>
+                <Route exact path="/users/find-users"><FindUsers/></Route>
+                <Route exact path="/users/signUp"><SignUp/></Route>
+                <Route exact path="/users/login"><LogIn/></Route>
+                <Route exact path="/users/recover"><RecoverUser/></Route>
+                <Route exact path="/users/:userName"><User/></Route>
+                <Route exact path="/users/:userName/changue-password"><ChanguePassword/></Route>
+                <Route exact path="/users/:userName/reset-password/:token"><ResetPassword/></Route>
+                <Route exact path="/users/:userName/changue-data"><ChangueProfileData/></Route>
                 <Route><Home /></Route>
             </Switch>
         </Container>

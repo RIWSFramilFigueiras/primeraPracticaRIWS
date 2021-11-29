@@ -28,6 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .addFilter(new JwtFilter(authenticationManager(), jwtGenerator))
                 .authorizeRequests()
+                .antMatchers("/grandesPremios/query").permitAll()
                 .antMatchers("/catalogo-concursos/concursos").permitAll()
                 .antMatchers("/catalogo-concursos/categorias").permitAll()
                 .antMatchers("/catalogo-concursos/concursos/*").permitAll()

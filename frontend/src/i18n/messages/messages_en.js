@@ -81,4 +81,31 @@ export default {
     'user.ChangueData.Surnames': 'Surnames',
     'user.ChangueData.Email': 'Email',
 
+    'formuladata.grandesPremios.nombre' : 'Gran Prix Races [1950-2021]',
+
+    'formulaData.grandesPremios.filter.pais' : 'Country or region of the Gran Prix',
+    'formulaData.grandesPremios.filter.team' : 'Team or engine brand',
+    'formulaData.grandesPremios.filter.driver.name' : 'Name of the driver',
+    'formulaData.grandesPremios.filter.driver.surname' : '1st surname of the driver',
+    'formulaData.grandesPremios.filter.driver.initials' : 'Driver initials',
+    'formulaData.grandesPremios.filter.driver.date.from' : 'Date from',
+    'formulaData.grandesPremios.filter.driver.date.to' : 'Date to',
+
+    'formulaData.grandesPremios.filter.pais.placeholder' : 'Insert the country or region of the Gran Prix',
+    'formulaData.grandesPremios.filter.team.placeholder' : 'Insert team or engine brand',
+    'formulaData.grandesPremios.filter.driver.name.placeholder' : 'Insert the  name of the driver',
+    'formulaData.grandesPremios.filter.driver.surname.placeholder' : 'Insert the 1st surname of the driver',
+    'formulaData.grandesPremios.filter.driver.initials.placeholder' : 'Insert the driver initials',
+
+    'formulaData.grandesPremios.filter.search' : 'Search',
+
+    'formulaData.grandesPremios.table.doQuery' : 'Select query params. Results will be shown here',
+    'formulaData.grandesPremios.table.noResults' : 'The query did not found any gran prix',
+
+    'formulaData.grandesPremios.items.granPremio' : 'Gran Prix',
+    'formulaData.grandesPremios.items.fecha' : 'Date',
+    'formulaData.grandesPremios.items.nombre' : 'Name',
+    'formulaData.grandesPremios.items.apellido' : 'Surname',
+    'formulaData.grandesPremios.items.iniciales' : 'Initials',
+    'formulaData.grandesPremios.items.equipo' : 'Team',
 }

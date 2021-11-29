@@ -103,4 +103,33 @@ export default {
     'user.ChangueData.TwitterLink': 'Enlace a Twitter',
     'user.ChangueData.FacebookLink': 'Enlace a Facebook',
     'user.ChangueData.InstagramLink': 'Enlace a Instagram',
+
+    'formuladata.grandesPremios.nombre' : 'Grandes Premios [1950-2021]',
+
+
+    'formulaData.grandesPremios.filter.pais' : 'País ou rexión do gran premio',
+    'formulaData.grandesPremios.filter.driver.name' : 'Nome do piloto',
+    'formulaData.grandesPremios.filter.driver.surname' : 'Primeiro apelido do piloto',
+    'formulaData.grandesPremios.filter.driver.initials' : 'Iniciais do piloto',
+    'formulaData.grandesPremios.filter.driver.date.from' : 'Data desde',
+    'formulaData.grandesPremios.filter.driver.date.to' : 'Data ata',
+
+    'formulaData.grandesPremios.filter.pais.placeholder' : 'Introduce o país ou rexión do gran premio',
+    'formulaData.grandesPremios.filter.team.placeholder' : 'Introduce o equipo ou motorista',
+    'formulaData.grandesPremios.filter.driver.name.placeholder' : 'Introduce o nome do piloto',
+    'formulaData.grandesPremios.filter.driver.surname.placeholder' : 'Introduce o primeiro apelido',
+    'formulaData.grandesPremios.filter.driver.initials.placeholder' : 'Introduce as iniciais',
+
+    'formulaData.grandesPremios.filter.search' : 'Procurar',
+
+    'formulaData.grandesPremios.table.doQuery' : 'Seleccione un criterio de búsqueda, os resultados aparecerán aquí.',
+    'formulaData.grandesPremios.table.noResults' : 'A procura non devolveu ningún resultado.',
+
+    'formulaData.grandesPremios.items.granPremio' : 'Gran Premio',
+    'formulaData.grandesPremios.filter.team' : 'Equipo ou motorista',
+    'formulaData.grandesPremios.items.fecha' : 'Data',
+    'formulaData.grandesPremios.items.nombre' : 'Nome',
+    'formulaData.grandesPremios.items.apellido' : 'Apelido',
+    'formulaData.grandesPremios.items.iniciales' : 'Iniciais',
+    'formulaData.grandesPremios.items.equipo' : 'Equipo',
 }

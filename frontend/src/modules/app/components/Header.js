@@ -19,6 +19,12 @@ const Header = () => {
       <Navbar bg="dark" variant="dark">
         <Container>
           <Link className="navbar-brand" to="/"><FormattedMessage id='app.Header.Title'/></Link>
+          <Nav className="me-auto center">
+            <Link className="nav-link" to="/grandes-premios">
+              <FormattedMessage id={'formuladata.grandesPremios.nombre'}/>
+            </Link>
+          </Nav>
+
           <Nav className="me-auto">
           </Nav>
 

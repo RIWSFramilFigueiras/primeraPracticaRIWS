@@ -1,3 +1,7 @@
+.center{
+  margin: auto;
+}
+
 Jumbotron {
   display: flex;
   flex-direction: column;
@@ -197,4 +201,14 @@ hr {
   height: 50px;
   width: 50px;
   border-radius: 50%;
+}
+
+.formulaData_filterDiv {
+  height: 1000px;
+  width: 300px;
+}
+
+.formulaData_tableDiv {
+  height: 1000px;
+  width: 700px;
 }

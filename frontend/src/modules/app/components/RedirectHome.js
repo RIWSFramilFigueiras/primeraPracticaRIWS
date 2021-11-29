@@ -1,8 +1,7 @@
-import { Container, Jumbotron } from "react-bootstrap";
+import { Container, Jumbotron} from "react-bootstrap";
 import { useSelector } from "react-redux";
 import * as userSelectors from "../../user/selectors";
 import SessionButtons from "./SessionButtons";
-
 
 const RedirectHome = () => {
 
@@ -14,7 +13,7 @@ const RedirectHome = () => {
             {
                 // If the user is logged in there is no need to show him/her the session buttons
                 userName ?
-                    null
+                        null
                     :
                     <Jumbotron fluid className="bg-light border border-ssecondary">
                         <Container>
