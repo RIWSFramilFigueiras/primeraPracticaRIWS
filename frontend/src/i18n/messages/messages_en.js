@@ -81,7 +81,8 @@ export default {
     'user.ChangueData.Surnames': 'Surnames',
     'user.ChangueData.Email': 'Email',
 
-    'formuladata.grandesPremios.nombre' : 'Gran Prix Races [1950-2021]',
+    'formuladata.grandesPremios.nombre' : 'Gran Prix Victories [1950-2020]',
+    'formuladata.fastestLaps.nombre' : 'Fastest Laps [1950-2020]',
 
     'formulaData.grandesPremios.filter.pais' : 'Country or region of the Gran Prix',
     'formulaData.grandesPremios.filter.team' : 'Team or engine brand',
@@ -108,4 +109,5 @@ export default {
     'formulaData.grandesPremios.items.apellido' : 'Surname',
     'formulaData.grandesPremios.items.iniciales' : 'Initials',
     'formulaData.grandesPremios.items.equipo' : 'Team',
+    'formulaData.grandesPremios.items.tiempo' : 'Time',
 }

@@ -113,7 +113,14 @@ export const deleteAccount = (userName, onSuccess, onErrors) => {
 
 export const findGps = (formulaDataQueryParams, onSuccess, onErrors) => {
 
-    let path = `/grandesPremios/query`;
+    let path = `/grandesPremios/victorias`;
+
+    appFetch(path, config('POST', formulaDataQueryParams), onSuccess, onErrors);
+}
+
+export const findFastestLaps = (formulaDataQueryParams, onSuccess, onErrors) => {
+
+    let path = `/grandesPremios/vueltasRapidas`;
 
     appFetch(path, config('POST', formulaDataQueryParams), onSuccess, onErrors);
 }

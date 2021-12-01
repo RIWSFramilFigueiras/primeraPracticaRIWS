@@ -1,6 +1,6 @@
 import {FormattedDate, FormattedMessage} from "react-intl";
 
-const FormulaDataResultTable = (grandesPremios) => {
+const FormulaDataVictoriesResultTable = ({grandesPremios}) => {
 
     return (
         <table className="table table-striped table-hover" >
@@ -56,4 +56,4 @@ const FormulaDataResultTable = (grandesPremios) => {
     )
 }
 
-export default FormulaDataResultTable;
+export default FormulaDataVictoriesResultTable;

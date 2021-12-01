@@ -23,6 +23,9 @@ const Header = () => {
             <Link className="nav-link" to="/grandes-premios">
               <FormattedMessage id={'formuladata.grandesPremios.nombre'}/>
             </Link>
+            <Link className="nav-link" to="/vueltas-rapidas">
+              <FormattedMessage id={'formuladata.fastestLaps.nombre'}/>
+            </Link>
           </Nav>
 
           <Nav className="me-auto">

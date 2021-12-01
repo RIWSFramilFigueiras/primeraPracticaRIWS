@@ -1,6 +1,7 @@
 package com.figueiras.photocontest.backend.rest.controllers;
 
 import com.figueiras.photocontest.backend.model.entities.GranPremio;
+import com.figueiras.photocontest.backend.model.entities.VueltaRapida;
 import com.figueiras.photocontest.backend.rest.dtos.UsuarioCambioContraseñaDto;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -33,8 +34,8 @@ public class SolrController {
                 .build();
     }
 
-    @PostMapping("/query")
-    private List<GranPremio> querySolr(@RequestBody FormulaDataQueryParams queryParams)
+    @PostMapping("/victorias")
+    private List<GranPremio> obtenerVictorias(@RequestBody FormulaDataQueryParams queryParams)
             throws SolrServerException, IOException, ParseException {
         final SolrClient client = getSolrClient();
 
@@ -60,6 +61,33 @@ public class SolrController {
 
         final QueryResponse response = client.query(query);
         final List<GranPremio> resultado = response.getBeans(GranPremio.class);
+
+        return resultado;
+    }
+
+    @PostMapping("/vueltasRapidas")
+    private List<VueltaRapida> obtenerVueltasRapidas(@RequestBody FormulaDataQueryParams queryParams)
+            throws SolrServerException, IOException, ParseException {
+        final SolrClient client = getSolrClient();
+
+        final String queryStr =
+                "granPremio_fl:" + queryParams.getGranPremio() + " && " +
+                "nombre_fl:" + queryParams.getNombre() + " && " +
+                "apellido_fl:" + queryParams.getApellido() + " && " +
+                "iniciales_fl:" + queryParams.getIniciales() + " && " +
+                "equipo_fl:" + queryParams.getEquipo();
+
+        final SolrQuery query = new SolrQuery(queryStr);
+        // Ordenar por fecha
+        query.setSort("iniciales_fl", SolrQuery.ORDER.asc);
+
+        // Paginacion
+        query.setStart((queryParams.getPage() - 1) * queryParams.getSize());
+        query.setRows(queryParams.getSize());
+
+
+        final QueryResponse response = client.query(query);
+        final List<VueltaRapida> resultado = response.getBeans(VueltaRapida.class);
 
         return resultado;
     }

@@ -1,12 +1,13 @@
 import Container from "react-bootstrap/Container";
 import {Button, Form} from "react-bootstrap";
 import {useEffect, useState} from "react";
-import FormulaDataResultTable from "./FormulaDataResultPage";
 import {useIntl} from "react-intl";
 import backend from "../../../backend";
 import Pager from "../../commons/components/Pager"
+import FormulaDataFastestLapsResultTable from "./FormulaDataFastestLapsResultTable";
+import FormulaDataFastestLapsResultPage from "./FormulaDataFastestLapsResultPage";
 
-const FormulaDataFilter = () => {
+const FormulaDataFastestLapsFilter = () => {
 
     // Variables para filtrado
     const [granPremio, setGranPremio] = useState("")
@@ -14,8 +15,6 @@ const FormulaDataFilter = () => {
     const [apellido, setApellido] = useState("")
     const [iniciales, setIniciales] = useState("")
     const [equipo, setEquipo] = useState("")
-    const [fechaDesde, setFechaDesde] = useState("")
-    const [fechaHasta, setFechaHasta] = useState("")
 
     // Variables para resultado
     const [grandesPremios, setGrandesPremios] = useState(null)
@@ -38,15 +37,13 @@ const FormulaDataFilter = () => {
     useEffect(() =>{
         // Solo si se ha buscado algo con anterioridad
         if(grandesPremios !== null){
-            backend.userService.findGps(
+            backend.userService.findFastestLaps(
                 {
                     granPremio : processParam(granPremio),
                     nombre : processParam(nombre),
                     apellido : processParam(apellido),
                     iniciales : processParam(iniciales),
                     equipo : processParam(equipo),
-                    fechaDesde : processParam(fechaDesde),
-                    fechaHasta : processParam(fechaHasta),
                     page,
                     size
                 },
@@ -62,15 +59,13 @@ const FormulaDataFilter = () => {
         // Se reestablece la página a 1 por si había búsquedas anteriores
         setPage(1)
 
-        backend.userService.findGps(
+        backend.userService.findFastestLaps(
             {
                 granPremio : processParam(granPremio),
                 nombre : processParam(nombre),
                 apellido : processParam(apellido),
                 iniciales : processParam(iniciales),
                 equipo : processParam(equipo),
-                fechaDesde : processParam(fechaDesde),
-                fechaHasta : processParam(fechaHasta),
                 page,
                 size
             },
@@ -94,7 +89,7 @@ const FormulaDataFilter = () => {
                         <Form.Control
                             type="text"
                             placeholder={intl.formatMessage
-                                            ({id: 'formulaData.grandesPremios.filter.pais.placeholder'})}
+                            ({id: 'formulaData.grandesPremios.filter.pais.placeholder'})}
                             value={granPremio}
                             onChange={event => setGranPremio(event.target.value)}
                             maxlength={50}
@@ -107,7 +102,7 @@ const FormulaDataFilter = () => {
                         <Form.Control
                             type="text"
                             placeholder={intl.formatMessage
-                                            ({id: 'formulaData.grandesPremios.filter.driver.name.placeholder'})}
+                            ({id: 'formulaData.grandesPremios.filter.driver.name.placeholder'})}
                             value={nombre}
                             onChange={event => setNombre(event.target.value)}
                             maxlength={50}
@@ -152,29 +147,6 @@ const FormulaDataFilter = () => {
                             maxlength={50}
                         />
                     </Form.Group>
-                    <div>
-                        <label>
-                            {intl.formatMessage({id: 'formulaData.grandesPremios.filter.driver.date.from'})}
-                        </label>
-                        <br/>
-                        <input
-                            type="date"
-                            value={fechaDesde}
-                            onChange={event => setFechaDesde(event.target.value)}
-                        />
-                    </div>
-                    <br/>
-                    <div>
-                        <label>
-                            {intl.formatMessage({id: 'formulaData.grandesPremios.filter.driver.date.to'})}
-                        </label>
-                        <br/>
-                        <input
-                            type="date"
-                            value={fechaHasta}
-                            onChange={event => setFechaHasta(event.target.value)}
-                        />
-                    </div>
                     <br/>
                     <div className={"center"}>
                         <Button type={"submit"} variant={"success"}>
@@ -188,7 +160,7 @@ const FormulaDataFilter = () => {
             <div className={"formulaData_tableDiv"}>
                 <h4 className={"centeredParagraph"}>Resultado</h4>
                 <hr/>
-                <FormulaDataResultTable data={grandesPremios}/>
+                <FormulaDataFastestLapsResultPage data={grandesPremios}/>
                 {
                     grandesPremios !== null?
                         <Pager
@@ -202,14 +174,14 @@ const FormulaDataFilter = () => {
                             }}
                         />
 
-                        
-                    :
+
+                        :
                         null
                 }
-                
+
             </div>
         </Container>
     )
 }
 
-export default FormulaDataFilter
+export default FormulaDataFastestLapsFilter

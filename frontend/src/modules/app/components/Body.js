@@ -10,7 +10,8 @@ import ChanguePassword from '../../user/components/ChanguePassword';
 import ChangueProfileData from '../../user/components/ChangueProfileData';
 import RecoverUser from '../../user/components/RecoverUser';
 import ResetPassword from '../../user/components/ResetPassword';
-import FormulaDataFilter from "./FormulaDataFilter";
+import FormulaDataVictoriesFilter from "./FormulaDataVictoriesFilter";
+import FormulaDataFastestLapsFilter from "./FormulaDataFastestLapsFilter";
 
 const Body = () => {
 
@@ -20,7 +21,8 @@ const Body = () => {
             <br />
             <Switch>
                 <Route exact path="/"><Home /></Route>
-                <Route exact path="/grandes-premios"><FormulaDataFilter/></Route>
+                <Route exact path="/grandes-premios"><FormulaDataVictoriesFilter/></Route>
+                <Route exact path="/vueltas-rapidas"><FormulaDataFastestLapsFilter/></Route>
                 <Route exact path="/users/find-users"><FindUsers/></Route>
                 <Route exact path="/users/signUp"><SignUp/></Route>
                 <Route exact path="/users/login"><LogIn/></Route>

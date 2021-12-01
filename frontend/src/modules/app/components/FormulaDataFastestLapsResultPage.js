@@ -1,8 +1,9 @@
 import {Alert} from "react-bootstrap";
 import {useIntl} from "react-intl";
-import FormulaDataResultTable from "./FormulaDataResultTable";
+import FormulaDataVictoriesResultTable from "./FormulaDataVictoriesResultTable";
+import FormulaDataFastestLapsResultTable from "./FormulaDataFastestLapsResultTable";
 
-const FormulaDataResultPage = (grandesPremios) => {
+const FormulaDataVictoriesResultPage = (grandesPremios) => {
 
     const intl = useIntl()
 
@@ -23,11 +24,11 @@ const FormulaDataResultPage = (grandesPremios) => {
     }
 
     return(
-        <FormulaDataResultTable grandesPremios={grandesPremios.data}/>
+        <FormulaDataFastestLapsResultTable grandesPremios={grandesPremios.data}/>
     )
 
 
 
 }
 
-export default FormulaDataResultPage
+export default FormulaDataVictoriesResultPage

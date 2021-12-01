@@ -1,6 +1,6 @@
 import {FormattedDate, FormattedMessage} from "react-intl";
 
-const FormulaDataResultTable = (grandesPremios) => {
+const FormulaDataVictoriesResultTable = ({grandesPremios}) => {
 
     return (
         <table className="table table-striped table-hover" >
@@ -10,7 +10,7 @@ const FormulaDataResultTable = (grandesPremios) => {
                     <FormattedMessage id='formulaData.grandesPremios.items.granPremio'/>
                 </th>
                 <th scope="col">
-                    <FormattedMessage id='formulaData.grandesPremios.items.fecha'/>
+                    <FormattedMessage id='formulaData.grandesPremios.items.tiempo'/>
                 </th>
                 <th scope="col">
                     <FormattedMessage id='formulaData.grandesPremios.items.nombre'/>
@@ -31,22 +31,22 @@ const FormulaDataResultTable = (grandesPremios) => {
             {grandesPremios.map(gp =>
                 <tr key={gp.id}>
                     <td>
-                        {gp.granPremio}
+                        {gp.granPremio_fl}
                     </td>
                     <td>
-                        <FormattedDate value={new Date(gp.fecha)}/>
+                        {gp.tiempo_fl}
                     </td>
                     <td>
-                        {gp.nombre}
+                        {gp.nombre_fl}
                     </td>
                     <td>
-                        {gp.apellido}
+                        {gp.apellido_fl}
                     </td>
                     <td>
-                        {gp.iniciales}
+                        {gp.iniciales_fl}
                     </td>
                     <td>
-                        {gp.equipo}
+                        {gp.equipo_fl}
                     </td>
                 </tr>
             )}
@@ -56,4 +56,4 @@ const FormulaDataResultTable = (grandesPremios) => {
     )
 }
 
-export default FormulaDataResultTable;
+export default FormulaDataVictoriesResultTable;

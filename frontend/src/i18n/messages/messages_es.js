@@ -104,7 +104,8 @@ export default {
     'user.ChangueData.FacebookLink': 'Enlace a Facebook',
     'user.ChangueData.InstagramLink': 'Enlace a Instagram',
 
-    'formuladata.grandesPremios.nombre' : 'Grandes Premios [1950-2021]',
+    'formuladata.grandesPremios.nombre' : 'Victorias en Grandes Premios [1950-2021]',
+    'formuladata.fastestLaps.nombre' : 'Vueltas Rápidas [1950-2020]',
 
     'formulaData.grandesPremios.filter.pais' : 'País o region del piloto',
     'formulaData.grandesPremios.filter.driver.name' : 'Nombre del piloto',
@@ -131,4 +132,5 @@ export default {
     'formulaData.grandesPremios.items.apellido' : 'Apellido',
     'formulaData.grandesPremios.items.iniciales' : 'Iniciales',
     'formulaData.grandesPremios.items.equipo' : 'Equipo',
+    'formulaData.grandesPremios.items.tiempo' : 'Tiempo',
 }
