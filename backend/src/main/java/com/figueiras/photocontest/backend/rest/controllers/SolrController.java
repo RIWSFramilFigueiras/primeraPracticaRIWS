@@ -25,8 +25,6 @@ public class SolrController {
 
     // Se establece la URL al core porque todas las peticiones van a ese mismo core
     private final String SOLR_URL = "http://localhost:8983/solr/formulaData";
-    private SimpleDateFormat solarDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-
 
     private HttpSolrClient getSolrClient(){
         return new HttpSolrClient.Builder(SOLR_URL)

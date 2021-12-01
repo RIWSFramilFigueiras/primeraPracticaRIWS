@@ -6,7 +6,7 @@
 import scrapy
 
 
-class Formula1Item(scrapy.Item):
+class Formula1VictoryItem(scrapy.Item):
 
     granPremio = scrapy.Field()
     fecha = scrapy.Field()
@@ -14,3 +14,12 @@ class Formula1Item(scrapy.Item):
     apellido = scrapy.Field()
     iniciales = scrapy.Field()
     equipo = scrapy.Field()
+
+class Formula1FastestLapItem(scrapy.Item):
+
+    granPremio_fl = scrapy.Field()
+    nombre_fl = scrapy.Field()
+    apellido_fl = scrapy.Field()
+    equipo_fl = scrapy.Field()
+    tiempo_fl = scrapy.Field()
+    iniciales_fl = scrapy.Field()

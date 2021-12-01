@@ -1,7 +1,7 @@
 import scrapy
 
 # Se importan los items definidos
-from formula1.items import Formula1Item
+from formula1.items import Formula1VictoryItem
 
 def transforMonth(monthStr):
     if monthStr == 'Jan':
@@ -31,15 +31,13 @@ def transforMonth(monthStr):
     else:
         return "01"
 
-class FormulaOneSpider(scrapy.Spider):
+class FormulaOneVictoriesSpider(scrapy.Spider):
     # Nombre del spider
-    name = 'formula-one'
+    name = 'formula-one-victories'
     # Dominios permitidos
     allowed_domains = ['https://www.formula1.com/en/results.html']
     # URL por la que empieza a scrapear
     start_urls = ['https://www.formula1.com/en/results.html']
-
-
 
     # Función que se encarga de generar las peticiones
     def start_requests(self):
@@ -51,7 +49,7 @@ class FormulaOneSpider(scrapy.Spider):
     # Se recogen los datos que nos interesan para la práctica
     def parse(self, response):
         
-        formulaItem = Formula1Item()
+        formulaItem = Formula1VictoryItem()
 
         for row in response.xpath('//*[@class="resultsarchive-table"]//tbody//tr'):
 

@@ -14,7 +14,8 @@ bin/solr stop
 
 # Comando para crawlear
 
-scrapy crawl formula-one
+scrapy crawl formula-one-victories
+scrapy crawl formula-one-fastest-laps
 
 # Comando MongoDB
 
