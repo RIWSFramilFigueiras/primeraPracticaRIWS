@@ -43,7 +43,7 @@ class FormulaOneVictoriesSpider(scrapy.Spider):
     def start_requests(self):
         # La url estará parametrizada por año, para así conseguir los resultados desde 1950 hasta 2021
         url = 'https://www.formula1.com/en/results.html/%d/races.html'
-        for year in range(1950,2021):
+        for year in range(1950,2022):
             yield scrapy.Request(url=url % year , callback=self.parse)
 
     # Se recogen los datos que nos interesan para la práctica

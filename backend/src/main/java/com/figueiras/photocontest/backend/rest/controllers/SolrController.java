@@ -70,16 +70,22 @@ public class SolrController {
             throws SolrServerException, IOException, ParseException {
         final SolrClient client = getSolrClient();
 
-        final String queryStr =
-                "granPremio_fl:" + queryParams.getGranPremio() + " && " +
-                "nombre_fl:" + queryParams.getNombre() + " && " +
-                "apellido_fl:" + queryParams.getApellido() + " && " +
-                "iniciales_fl:" + queryParams.getIniciales() + " && " +
-                "equipo_fl:" + queryParams.getEquipo();
+        String queryStr =
+            "granPremio_fl:" + queryParams.getGranPremio() + " && " +
+            "nombre_fl:" + queryParams.getNombre() + " && " +
+            "apellido_fl:" + queryParams.getApellido() + " && " +
+            "iniciales_fl:" + queryParams.getIniciales() + " && " +
+            "equipo_fl:" + queryParams.getEquipo();
 
+        // Si viene fecha, se añade a query, si no no se filtra por fecha para
+        // que aparezcan todas las vueltas rápidas
+        if(!queryParams.getAno().equals("")){
+            queryStr = queryStr + " && " + "ano:" + queryParams.getAno();
+        }
+        
         final SolrQuery query = new SolrQuery(queryStr);
         // Ordenar por fecha
-        query.setSort("iniciales_fl", SolrQuery.ORDER.asc);
+        query.setSort("ano", SolrQuery.ORDER.asc);
 
         // Paginacion
         query.setStart((queryParams.getPage() - 1) * queryParams.getSize());

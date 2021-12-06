@@ -15,6 +15,7 @@ const FormulaDataFastestLapsFilter = () => {
     const [apellido, setApellido] = useState("")
     const [iniciales, setIniciales] = useState("")
     const [equipo, setEquipo] = useState("")
+    const [ano, setAno] = useState("")
 
     // Variables para resultado
     const [grandesPremios, setGrandesPremios] = useState(null)
@@ -44,6 +45,7 @@ const FormulaDataFastestLapsFilter = () => {
                     apellido : processParam(apellido),
                     iniciales : processParam(iniciales),
                     equipo : processParam(equipo),
+                    ano,
                     page,
                     size
                 },
@@ -66,6 +68,7 @@ const FormulaDataFastestLapsFilter = () => {
                 apellido : processParam(apellido),
                 iniciales : processParam(iniciales),
                 equipo : processParam(equipo),
+                ano,
                 page,
                 size
             },
@@ -146,6 +149,20 @@ const FormulaDataFastestLapsFilter = () => {
                             onChange={event => setEquipo(event.target.value)}
                             maxlength={50}
                         />
+                    </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>
+                                {intl.formatMessage({id: 'formulaData.grandesPremios.items.year'})}
+                            </Form.Label>
+                            <Form.Control
+                                type="number"
+                                placeholder={intl.formatMessage
+                                ({id: 'formulaData.grandesPremios.items.year.placeholder'})}
+                                value={ano}
+                                onChange={event => setAno(event.target.value)}
+                                min={1950}
+                                max={2021}
+                            />
                     </Form.Group>
                     <br/>
                     <div className={"center"}>

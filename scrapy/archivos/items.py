@@ -23,3 +23,4 @@ class Formula1FastestLapItem(scrapy.Item):
     equipo_fl = scrapy.Field()
     tiempo_fl = scrapy.Field()
     iniciales_fl = scrapy.Field()
+    ano = scrapy.Field()

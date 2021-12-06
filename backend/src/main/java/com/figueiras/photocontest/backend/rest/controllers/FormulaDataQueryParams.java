@@ -9,6 +9,7 @@ public class FormulaDataQueryParams {
     private String apellido;
     private String iniciales;
     private String equipo;
+    private String ano;
     private int page;
     private int size;
 
@@ -69,6 +70,14 @@ public class FormulaDataQueryParams {
 
     public void setIniciales(String iniciales) {
         this.iniciales = iniciales;
+    }
+
+    public String getAno() {
+        return ano;
+    }
+
+    public void setAno(String ano) {
+        this.ano = ano;
     }
 
     public int getPage() {

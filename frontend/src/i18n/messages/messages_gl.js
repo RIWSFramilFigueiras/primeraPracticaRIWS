@@ -134,4 +134,6 @@ export default {
     'formulaData.grandesPremios.items.iniciales' : 'Iniciais',
     'formulaData.grandesPremios.items.equipo' : 'Equipo',
     'formulaData.grandesPremios.items.tiempo' : 'Tempo',
+    'formulaData.grandesPremios.items.year' : 'Ano',
+    'formulaData.grandesPremios.items.year.placeholder' : 'Introduce o ano',
 }

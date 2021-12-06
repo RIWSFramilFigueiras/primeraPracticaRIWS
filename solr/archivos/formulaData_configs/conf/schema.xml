@@ -122,15 +122,6 @@
 
     <field name="_text_" type="text_general" indexed="true" stored="false" multiValued="true"/>
 
-    <!-- Tipos de datos para tabla de resultados de victorias en Grandes Premios de Fórmula 1 1950-2021 Formula1.com-->
-    <field name="granPremio" type="text_general" indexed="true" stored="true" multiValued="false"/>
-    <field name="fecha" type="pdate" indexed="true" stored="true" multiValued="false"/>
-    <field name="nombre" type="text_general" indexed="true" stored="true" multiValued="false"/>
-    <field name="apellido" type="text_general" indexed="true" stored="true" multiValued="false"/>
-    <field name="iniciales" type="text_general" indexed="true" stored="true" multiValued="false"/>
-    <field name="equipo" type="text_general" indexed="true" stored="true" multiValued="false"/>
-    <!-- Tipos de datos para tabla de resultados de victorias en Grandes Premios de Fórmula 1 1950-2021 Formula1.com-->
-
     <!-- Tipos de datos para tabla de resultados de vueltas rapidas en Grandes Premios de Fórmula 1 1950-2021 Formula1.com-->
     <field name="granPremio_fl" type="text_general" indexed="true" stored="true" multiValued="false"/>
     <field name="tiempo_fl" type="text_general" indexed="true" stored="true" multiValued="false"/>
@@ -138,7 +129,17 @@
     <field name="apellido_fl" type="text_general" indexed="true" stored="true" multiValued="false"/>
     <field name="iniciales_fl" type="text_general" indexed="true" stored="true" multiValued="false"/>
     <field name="equipo_fl" type="text_general" indexed="true" stored="true" multiValued="false"/>
+    <field name="ano" type="pint" indexed="true" stored="true" multiValued="false"/>
     <!-- Tipos de datos para tabla de resultados de vueltas rapidas en Grandes Premios de Fórmula 1 1950-2021 Formula1.com-->
+
+        <!-- Tipos de datos para tabla de resultados de victorias en Grandes Premios de Fórmula 1 1950-2021 Formula1.com-->
+    <field name="granPremio" type="text_general" indexed="true" stored="true" multiValued="false"/>
+    <field name="fecha" type="pdate" indexed="true" stored="true" multiValued="false"/>
+    <field name="nombre" type="text_general" indexed="true" stored="true" multiValued="false"/>
+    <field name="apellido" type="text_general" indexed="true" stored="true" multiValued="false"/>
+    <field name="iniciales" type="text_general" indexed="true" stored="true" multiValued="false"/>
+    <field name="equipo" type="text_general" indexed="true" stored="true" multiValued="false"/>
+    <!-- Tipos de datos para tabla de resultados de victorias en Grandes Premios de Fórmula 1 1950-2021 Formula1.com-->
 
 iniciales_fl       
 

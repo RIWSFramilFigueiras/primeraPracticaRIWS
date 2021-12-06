@@ -16,8 +16,8 @@ class FormulaOneFastestLapsSpider(scrapy.Spider):
     def start_requests(self):
         # La url estará parametrizada por año, para así conseguir los resultados desde 1950 hasta 2021
         url = 'https://www.formula1.com/en/results.html/%d/fastest-laps.html'
-        for year in range(1950,2021):
-            yield scrapy.Request(url=url % year , callback=self.parse)
+        for year in range(1950,2022):
+            yield scrapy.Request(url=url % year , callback=self.parse, meta={"year" : year})
 
     # Se recogen los datos que nos interesan para la práctica
     def parse(self, response):
@@ -32,6 +32,7 @@ class FormulaOneFastestLapsSpider(scrapy.Spider):
             equipo = row.xpath('td//text()')[8].extract().strip()
             iniciales = row.xpath('td//text()')[6].extract().strip()
             tiempo = row.xpath('td//text()')[9].extract().strip()
+            ano = response.meta["year"]
 
             formulaItem['granPremio_fl'] = granPremio
             formulaItem['nombre_fl'] = nombrePiloto
@@ -39,6 +40,7 @@ class FormulaOneFastestLapsSpider(scrapy.Spider):
             formulaItem['equipo_fl'] = equipo
             formulaItem['iniciales_fl'] = iniciales
             formulaItem['tiempo_fl'] = tiempo
+            formulaItem['ano'] = ano
             
             yield formulaItem
     

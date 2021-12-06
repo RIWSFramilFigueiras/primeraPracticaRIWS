@@ -24,6 +24,9 @@ const FormulaDataVictoriesResultTable = ({grandesPremios}) => {
                 <th scope="col">
                     <FormattedMessage id='formulaData.grandesPremios.items.equipo'/>
                 </th>
+                <th scope="col">
+                    <FormattedMessage id='formulaData.grandesPremios.items.year'/>
+                </th>
             </tr>
             </thead>
 
@@ -47,6 +50,9 @@ const FormulaDataVictoriesResultTable = ({grandesPremios}) => {
                     </td>
                     <td>
                         {gp.equipo_fl}
+                    </td>
+                    <td>
+                        {gp.ano}
                     </td>
                 </tr>
             )}
