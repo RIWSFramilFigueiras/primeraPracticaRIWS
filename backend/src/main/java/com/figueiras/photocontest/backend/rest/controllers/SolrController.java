@@ -1,12 +1,15 @@
 package com.figueiras.photocontest.backend.rest.controllers;
 
 import com.figueiras.photocontest.backend.model.entities.GranPremio;
+import com.figueiras.photocontest.backend.model.entities.RespuestaSolr;
+import com.figueiras.photocontest.backend.model.entities.ResultadoFacetado;
 import com.figueiras.photocontest.backend.model.entities.VueltaRapida;
 import com.figueiras.photocontest.backend.rest.dtos.UsuarioCambioContraseñaDto;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +39,7 @@ public class SolrController {
     }
 
     @PostMapping("/victorias")
-    private List<GranPremio> obtenerVictorias(@RequestBody FormulaDataQueryParams queryParams)
+    private RespuestaSolr obtenerVictorias(@RequestBody FormulaDataQueryParams queryParams)
             throws SolrServerException, IOException, ParseException {
         final SolrClient client = getSolrClient();
 
@@ -58,15 +62,25 @@ public class SolrController {
         query.setStart((queryParams.getPage() - 1) * queryParams.getSize());
         query.setRows(queryParams.getSize());
 
+        // Añadiendo el campo de facetado
+        query.addFacetField("apellido");
 
         final QueryResponse response = client.query(query);
-        final List<GranPremio> resultado = response.getBeans(GranPremio.class);
+        final List<GranPremio> resultadoBusqueda = response.getBeans(GranPremio.class);
+
+        // Se recuperan los datos relativos al facetado, en este caso solo de apellido, pero queda preparado para varios
+        List<FacetField> facetFields = response.getFacetFields();
+        List<ResultadoFacetado> resultadoFacetado = getResultadoFacetado(facetFields);
+
+        RespuestaSolr resultado = new RespuestaSolr();
+        resultado.setResultadoBusqueda(resultadoBusqueda);
+        resultado.setResultadoFacetado(resultadoFacetado);
 
         return resultado;
     }
 
     @PostMapping("/vueltasRapidas")
-    private List<VueltaRapida> obtenerVueltasRapidas(@RequestBody FormulaDataQueryParams queryParams)
+    private RespuestaSolr obtenerVueltasRapidas(@RequestBody FormulaDataQueryParams queryParams)
             throws SolrServerException, IOException, ParseException {
         final SolrClient client = getSolrClient();
 
@@ -91,9 +105,19 @@ public class SolrController {
         query.setStart((queryParams.getPage() - 1) * queryParams.getSize());
         query.setRows(queryParams.getSize());
 
+        // Añadiendo el campo de facetado
+        query.addFacetField("apellido_fl");
 
         final QueryResponse response = client.query(query);
-        final List<VueltaRapida> resultado = response.getBeans(VueltaRapida.class);
+        final List<VueltaRapida> resultadoBusqueda = response.getBeans(VueltaRapida.class);
+
+        // Se recuperan los datos relativos al facetado, en este caso solo de apellido, pero queda preparado para varios
+        List<FacetField> facetFields = response.getFacetFields();
+        List<ResultadoFacetado> resultadoFacetado = getResultadoFacetado(facetFields);
+
+        RespuestaSolr resultado = new RespuestaSolr();
+        resultado.setResultadoBusqueda(resultadoBusqueda);
+        resultado.setResultadoFacetado(resultadoFacetado);
 
         return resultado;
     }
@@ -104,5 +128,24 @@ public class SolrController {
         }else{
             return date;
         }
+    }
+
+    private List<ResultadoFacetado> getResultadoFacetado(List<FacetField> facetFields){
+        List<ResultadoFacetado> resultadoFacetado = new ArrayList<>();
+        for (int i = 0; i < facetFields.size(); i++) {
+            FacetField facetField = facetFields.get(i);
+            List<FacetField.Count> facetInfo = facetField.getValues();
+
+            // Se eliminan los apellidos con 0 coincidencias
+            for (FacetField.Count facetInstance : facetInfo) {
+                if(facetInstance.getCount() != 0){
+                    ResultadoFacetado rf = new ResultadoFacetado();
+                    rf.setApellido(facetInstance.getName());
+                    rf.setOcurrencias(facetInstance.getCount());
+                    resultadoFacetado.add(rf);
+                }
+            }
+        }
+        return  resultadoFacetado;
     }
 }

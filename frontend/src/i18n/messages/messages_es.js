@@ -135,4 +135,6 @@ export default {
     'formulaData.grandesPremios.items.tiempo' : 'Tiempo',
     'formulaData.grandesPremios.items.year' : 'Año',
     'formulaData.grandesPremios.items.year.placeholder' : 'Introduzca el año',
+
+    'formulaData.apellidos' : 'Apellidos:'
 }

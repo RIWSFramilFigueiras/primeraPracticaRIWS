@@ -112,4 +112,6 @@ export default {
     'formulaData.grandesPremios.items.tiempo' : 'Time',
     'formulaData.grandesPremios.items.year' : 'Year',
     'formulaData.grandesPremios.items.year.placeholder' : 'Insert the year',
+
+    'formulaData.apellidos' : 'Surnames:'
 }

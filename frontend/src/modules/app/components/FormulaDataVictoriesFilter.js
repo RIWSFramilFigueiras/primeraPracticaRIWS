@@ -1,10 +1,11 @@
 import Container from "react-bootstrap/Container";
 import {Button, Form} from "react-bootstrap";
 import {useEffect, useState} from "react";
-import {useIntl} from "react-intl";
+import {FormattedMessage, useIntl} from "react-intl";
 import backend from "../../../backend";
 import Pager from "../../commons/components/Pager"
 import FormulaDataVictoriesResultPage from "./FormulaDataVictoriesResultPage";
+import { Link } from "react-router-dom";
 
 const FormulaDataVictoriesFilter = () => {
 
@@ -22,7 +23,11 @@ const FormulaDataVictoriesFilter = () => {
 
     // Paginacion
     const [page, setPage] = useState(1)
-    const size = 10
+    const size = 15
+
+    // Facetado
+
+    const [facetado, setFacetado] = useState(false)
 
     const intl = useIntl()
 
@@ -32,6 +37,41 @@ const FormulaDataVictoriesFilter = () => {
         }else{
             return value
         }
+    }
+
+    const datosTabla = () => {
+        if(grandesPremios != null){
+            return grandesPremios.resultadoBusqueda
+        }else{
+            return null
+        }
+    }
+
+    const crearListaFacetado = () => {
+        var listaLinks = [];
+        var tamañoResultadoFacetado = grandesPremios.resultadoFacetado.length
+
+        for (let i = 0; i < tamañoResultadoFacetado; i++) {
+            const element = grandesPremios.resultadoFacetado[i];
+            var textoLink = `${element.apellido} ${element.ocurrencias}`
+            if(i !== tamañoResultadoFacetado-1){
+                textoLink= textoLink.concat(", ")
+            } else {
+                textoLink= textoLink.concat(" ")
+            }
+            var link = <Link onClick={() => buscarPorFacetado(element.apellido, true)}>{textoLink}</Link>
+            listaLinks.push(link)
+
+        }
+
+        if(facetado){
+            listaLinks.push(
+                <Link className={"botonCancelarFacetado"} onClick={() => buscarPorFacetado("", false)} variant="danger">x</Link>
+            )
+        }
+
+
+        return listaLinks
     }
 
     // Paginacion
@@ -58,7 +98,9 @@ const FormulaDataVictoriesFilter = () => {
 
     const handleSubmit = (event) => {
 
+
         event.preventDefault()
+        
         // Se reestablece la página a 1 por si había búsquedas anteriores
         setPage(1)
 
@@ -77,8 +119,33 @@ const FormulaDataVictoriesFilter = () => {
             gps => setGrandesPremios(gps),
             gps => null
         )
+    }
 
+    // Se puede entrar a este método de dos maneras:
+    //  1) Al clickar en uno de los links del facetado, poniento facetado a true
+    //  2) Al desactivar el facetado, poniendo facetado a false
+    const buscarPorFacetado = (apellido, facetado) => {
+        
+        // Se reestablece la página a 1 por si había búsquedas anteriores
+        setPage(1)
+        setApellido(apellido)
+        setFacetado(facetado)
 
+        backend.userService.findGps(
+            {
+                granPremio : processParam(granPremio),
+                nombre : processParam(nombre),
+                apellido : processParam(apellido),
+                iniciales : processParam(iniciales),
+                equipo : processParam(equipo),
+                fechaDesde : processParam(fechaDesde),
+                fechaHasta : processParam(fechaHasta),
+                page,
+                size
+            },
+            gps => setGrandesPremios(gps),
+            gps => null
+        )
     }
 
     return(
@@ -125,6 +192,20 @@ const FormulaDataVictoriesFilter = () => {
                             onChange={event => setApellido(event.target.value)}
                             maxlength={50}
                         />
+
+                    {
+                        grandesPremios != null?
+                            <div>
+                                {intl.formatMessage({id: 'formulaData.apellidos'})}
+                                &nbsp;
+                                {crearListaFacetado()}
+                            </div>
+                            
+                        
+                            :
+
+                            null
+                    }
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>
@@ -181,6 +262,7 @@ const FormulaDataVictoriesFilter = () => {
                             {intl.formatMessage({id: 'formulaData.grandesPremios.filter.search'})}
                         </Button>
                     </div>
+                    <br/><br/><br/><br/>
                 </Form>
 
             </div>
@@ -188,7 +270,7 @@ const FormulaDataVictoriesFilter = () => {
             <div className={"formulaData_tableDiv"}>
                 <h4 className={"centeredParagraph"}>Resultado</h4>
                 <hr/>
-                <FormulaDataVictoriesResultPage data={grandesPremios}/>
+                <FormulaDataVictoriesResultPage data={datosTabla()}/>
                 {
                     grandesPremios !== null?
                         <Pager
@@ -197,7 +279,7 @@ const FormulaDataVictoriesFilter = () => {
                                 onClick: () => setPage(page-1)
                             }}
                             next={{
-                                enabled: grandesPremios.length >= 10,
+                                enabled: grandesPremios.resultadoBusqueda.length >= size,
                                 onClick: () => setPage(page+1)
                             }}
                         />

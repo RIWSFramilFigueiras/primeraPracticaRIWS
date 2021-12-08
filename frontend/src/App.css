@@ -204,11 +204,17 @@ hr {
 }
 
 .formulaData_filterDiv {
-  height: 1000px;
+  height: 1100px;
   width: 300px;
 }
 
 .formulaData_tableDiv {
   height: 1000px;
   width: 700px;
+}
+
+.botonCancelarFacetado{
+  height: 25px;
+  width: 10px;
+  color: red;
 }
