@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import {Button, Form} from "react-bootstrap";
 import {useEffect, useState} from "react";
-import {FormattedMessage, useIntl} from "react-intl";
+import {useIntl} from "react-intl";
 import backend from "../../../backend";
 import Pager from "../../commons/components/Pager"
 import FormulaDataVictoriesResultPage from "./FormulaDataVictoriesResultPage";
@@ -94,6 +94,7 @@ const FormulaDataVictoriesFilter = () => {
                 gps => null
             )
         }
+        // eslint-disable-next-line
     },[page])
 
     const handleSubmit = (event) => {

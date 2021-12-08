@@ -1,4 +1,4 @@
-import {FormattedDate, FormattedMessage} from "react-intl";
+import {FormattedMessage} from "react-intl";
 
 const FormulaDataVictoriesResultTable = ({grandesPremios}) => {
 

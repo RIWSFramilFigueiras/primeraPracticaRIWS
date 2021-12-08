@@ -1,6 +1,5 @@
 import {Alert} from "react-bootstrap";
 import {useIntl} from "react-intl";
-import FormulaDataVictoriesResultTable from "./FormulaDataVictoriesResultTable";
 import FormulaDataFastestLapsResultTable from "./FormulaDataFastestLapsResultTable";
 
 const FormulaDataVictoriesResultPage = (grandesPremios) => {

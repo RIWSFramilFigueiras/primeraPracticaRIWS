@@ -4,7 +4,6 @@ import {useEffect, useState} from "react";
 import {useIntl} from "react-intl";
 import backend from "../../../backend";
 import Pager from "../../commons/components/Pager"
-import FormulaDataFastestLapsResultTable from "./FormulaDataFastestLapsResultTable";
 import FormulaDataFastestLapsResultPage from "./FormulaDataFastestLapsResultPage";
 import {Link} from "react-router-dom";
 
@@ -93,6 +92,7 @@ const FormulaDataFastestLapsFilter = () => {
                 gps => null
             )
         }
+        // eslint-disable-next-line
     },[page])
 
     const handleSubmit = (event) => {
