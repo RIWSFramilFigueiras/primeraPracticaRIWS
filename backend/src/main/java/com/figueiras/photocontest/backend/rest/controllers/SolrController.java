@@ -48,11 +48,11 @@ public class SolrController {
         final String fechaHasta = transformDateToSolrFormat(queryParams.getFechaHasta());
 
         final String queryStr =
-                "granPremio:" + queryParams.getGranPremio() + " && " +
-                "nombre:" + queryParams.getNombre() + " && " +
-                "apellido:" + queryParams.getApellido() + " && " +
+                "granPremio:\"" + queryParams.getGranPremio() + "\" && " +
+                "nombre:\"" + queryParams.getNombre() + "\" && " +
+                "apellido:\"" + queryParams.getApellido() + "\" && " +
                 "iniciales:" + queryParams.getIniciales() + " && " +
-                "equipo:" + queryParams.getEquipo() + " && " +
+                "equipo:\"" + queryParams.getEquipo() + "\" && " +
                 "fecha:[" + fechaDesde + " TO " + fechaHasta + "]";
         final SolrQuery query = new SolrQuery(queryStr);
         // Ordenar por fecha
@@ -85,11 +85,11 @@ public class SolrController {
         final SolrClient client = getSolrClient();
 
         String queryStr =
-            "granPremio_fl:" + queryParams.getGranPremio() + " && " +
-            "nombre_fl:" + queryParams.getNombre() + " && " +
-            "apellido_fl:" + queryParams.getApellido() + " && " +
+            "granPremio_fl:\"" + queryParams.getGranPremio() + "\" && " +
+            "nombre_fl:\"" + queryParams.getNombre() + "\" && " +
+            "apellido_fl:\"" + queryParams.getApellido() + "\" && " +
             "iniciales_fl:" + queryParams.getIniciales() + " && " +
-            "equipo_fl:" + queryParams.getEquipo();
+            "equipo_fl:\"" + queryParams.getEquipo() + "\"";
 
         // Si viene fecha, se añade a query, si no no se filtra por fecha para
         // que aparezcan todas las vueltas rápidas
